@@ -2,17 +2,42 @@ package iq.legit.features;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.entity.player.PlayerEntity;
+import iq.legit.config.ConfigManager;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ManaDrainNotify {
 
+    private static final Pattern MANA_DRAIN_PATTERN = Pattern.compile ("Used Extreme Focus! \\((\\d+)\\)");
+
     public static void init() {
-        ClientReceiveMessageEvents.CHAT.register((message, signedMessage, sender, params, receptionTimestamp) -> {
-            if (message.getString().contains("Used Extreme Focus!")) {
-                MinecraftClient client = MinecraftClient.getInstance();
-                if (client.player != null) {
-                    client.player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), 2.0f, 1.0f);
+        ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
+            if (!ConfigManager.manaDrainNotify) return;
+            String chatMessage = message.getString();
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client.player == null || client.world == null || client.getNetworkHandler() == null) {
+                return;
+            }
+            
+            Matcher matcher = MANA_DRAIN_PATTERN.matcher(chatMessage);
+            if (matcher.find()) {  
+                String mana = matcher.group(1);
+                int playersFound = 0;
+
+                for (PlayerEntity player : client.world.getPlayers()) {
+                    if (client.player.distanceTo(player) <= 5) {
+                        PlayerListEntry playerEntry = client.getNetworkHandler().getPlayerListEntry(player.getUuid());
+                        if (playerEntry != null && playerEntry.getLatency() != 1) {
+                            playersFound++;
+
+                        }
+                    }
                 }
+
+                String command = "pc Used " + mana + " mana on " + playersFound + " players!";
+                client.player.networkHandler.sendChatCommand(command);
             }
         });
     }

@@ -3,15 +3,12 @@ package iq.legit.features;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.sound.SoundEvents;
-
-// Importe o ConfigManager
 import iq.legit.config.ConfigManager;
-
 import java.util.regex.Pattern;
 
 public class PartyJoinSound {
     
-    private static final Pattern PARTY_JOIN_PATTERN = Pattern.compile ("joined the party.");
+    private static final Pattern PARTY_JOIN_PATTERN = Pattern.compile ("(.+?) joined the (.+?)");
 
     public static void init() {
         ClientReceiveMessageEvents.CHAT.register((message, signedMessage, sender, params, receptionTimestamp) -> {

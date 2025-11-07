@@ -25,7 +25,7 @@ public class ModMenuIntegration implements ModMenuApi {
         return parent -> {
             ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Text.literal("IQ-1-21 Settings")) // Título mudou
+                .setTitle(Text.literal("IQ Settings")) // Título mudou
                 .setSavingRunnable(() -> {
                     ConfigManager.saveConfig();
                     KeyBinding.updateKeysByCode();
@@ -33,8 +33,8 @@ public class ModMenuIntegration implements ModMenuApi {
 
             ConfigEntryBuilder entry = builder.entryBuilder();
             
-            // --- Categoria para SUAS features ---
-            builder.getOrCreateCategory(Text.literal("IQ Features"))
+            // --- General Features ---
+            builder.getOrCreateCategory(Text.literal("General Features"))
                 .addEntry(entry.startBooleanToggle(Text.literal("Party Join Sound"), ConfigManager.partyJoinSound)
                     .setDefaultValue(true)
                     .setSaveConsumer(val -> ConfigManager.partyJoinSound = val)
@@ -46,51 +46,12 @@ public class ModMenuIntegration implements ModMenuApi {
                 .addEntry(entry.startBooleanToggle(Text.literal("Mana Drain Notify"), ConfigManager.manaDrainNotify)
                     .setDefaultValue(true)
                     .setSaveConsumer(val -> ConfigManager.manaDrainNotify = val)
-                    .build())
-                .addEntry(entry.startBooleanToggle(Text.literal("Backbone Alert"), ConfigManager.backboneAlert)
-                    .setDefaultValue(true)
-                    .setSaveConsumer(val -> ConfigManager.backboneAlert = val)
-                    .build());
-            
-            // --- Categoria para as features 'autoLogout' ---
-            builder.getOrCreateCategory(Text.literal("AutoDrop Settings"))
-                .addEntry(entry.startBooleanToggle(Text.literal("Mod Enabled"), ConfigManager.isModEnabled)
-                    .setDefaultValue(true)
-                    .setSaveConsumer(val -> ConfigManager.isModEnabled = val)
-                    .setTooltip(Text.literal("Enable or disable the entire mod"))
-                    .build())
-                // ... (o resto das settings de 'autoLogout'...)
-                .addEntry(entry.startBooleanToggle(Text.literal("Auto Drop Function"), ConfigManager.dropFunctionActive)
-                    .setDefaultValue(true)
-                    .setSaveConsumer(val -> ConfigManager.dropFunctionActive = val)
-                    .build())
-                .addEntry(entry.startBooleanToggle(Text.literal("Half HP Drop"), ConfigManager.halfHpEnabled)
-                    .setDefaultValue(true)
-                    .setSaveConsumer(val -> ConfigManager.halfHpEnabled = val)
-                    .build())
-                .addEntry(entry.startFloatField(Text.literal("Health Threshold"), ConfigManager.healthThreshold)
-                    .setDefaultValue(10.0f)
-                    .setSaveConsumer(val -> ConfigManager.healthThreshold = val)
-                    .build());
-
-            // ... (O resto das categorias: Swap Hands, SpaceSpammer, Keybinds) ...
-            // (Você pode adicionar/remover o que quiser daqui)
-            
-            builder.getOrCreateCategory(Text.literal("SpaceSpammer Settings"))
-                .addEntry(entry.startIntSlider(Text.literal("Min CPS"), ConfigManager.minCps, 1, 20)
-                    .setDefaultValue(11)
-                    .setSaveConsumer(val -> ConfigManager.minCps = val)
-                    .build())
-                .addEntry(entry.startIntSlider(Text.literal("Max CPS"), ConfigManager.maxCps, 1, 20)
-                    .setDefaultValue(13)
-                    .setSaveConsumer(val -> ConfigManager.maxCps = val)
                     .build());
 
             builder.getOrCreateCategory(Text.literal("Keybinds"))
                 .addEntry(entry.startKeyCodeField(Text.literal("Open Config Menu"), ModKeybinds.OPEN_CONFIG_KEY.getDefaultKey())
                     .setKeySaveConsumer(key -> ModKeybinds.OPEN_CONFIG_KEY.setBoundKey(key))
                     .build());
-            // ... (o resto das keybinds)
 
             return builder.build();
         };

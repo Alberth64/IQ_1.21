@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ManaDrainNotify {
 
-    private static final Pattern MANA_DRAIN_PATTERN = Pattern.compile ("Used Extreme Focus! \\((\\d+)\\)");
+    private static final Pattern MANA_DRAIN_PATTERN = Pattern.compile ("Used Extreme Focus!\\s*\\((\\d+)\\s*Mana\\)");
 
     public static void init() {
         ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
@@ -36,8 +36,8 @@ public class ManaDrainNotify {
                     }
                 }
 
-                String command = "pc Used " + mana + " mana on " + playersFound + " players!";
-                client.player.networkHandler.sendChatCommand(command);
+                String mensagem = "/pc Used " + mana + " mana on " + playersFound + " players!";
+                client.player.networkHandler.sendChatMessage(mensagem);
             }
         });
     }

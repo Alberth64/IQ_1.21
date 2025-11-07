@@ -20,7 +20,7 @@ public class AlreadyPicking {
             if (client.player == null) return;
 
             if (chatMessage.contains(ALREADY_PICKING_MESSAGE)) {
-                Text title = Text.literal("Already Picking!").formatted(Formatting.RED);
+                Text title = Text.literal("Already Picking!").formatted(Formatting.WHITE, Formatting.BOLD);
                 client.inGameHud.setTitle(title);
                 client.inGameHud.setSubtitle(Text.literal(""));
                 client.inGameHud.setTitleTicks(0, 25, 0);

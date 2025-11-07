@@ -1,24 +1,23 @@
 package iq.legit;
 
-import net.fabricmc.api.ModInitializer;
+import iq.legit.features.AlreadyPicking;
+import iq.legit.features.ManaDrainNotify;
+import iq.legit.features.PartyJoinSound;
+import net.fabricmc.api.ClientModInitializer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.terraformersmc.modmenu.util.mod.Mod;
 
-public class Iq implements ModInitializer {
-	public static final String MOD_ID = "iq";
+import iq.legit.config.ConfigManager;
+import iq.legit.keybinds.ModKeybinds;
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+public class Iq implements ClientModInitializer {
 
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
-		LOGGER.info("Hello Fabric world!");
-	}
+    @Override
+    public void onInitializeClient() {
+        ConfigManager.loadConfig();
+        ModKeybinds.register();
+        PartyJoinSound.init();
+        AlreadyPicking.init();
+        ManaDrainNotify.init();
+    }
 }

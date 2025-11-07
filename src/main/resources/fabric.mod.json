@@ -16,17 +16,19 @@
 	"environment": "*",
 	"entrypoints": {
 		"client": [
-			"iq.legit.IqClient"
+			"iq.legit.Iq"
+		],
+		"modmenu": [
+			"iq.legit.config.ModMenuIntegration"
 		]
 	},
-	"mixins": [
-		"iq.mixins.json"
-	],
 	"depends": {
-		"fabricloader": ">=0.17.3",
+		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.21.5",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"modmenu": ">=14.0.0-rc.2",
+		"cloth-config": ">=18.0.145"
 	},
 	"suggests": {
 		"another-mod": "*"

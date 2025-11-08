@@ -9,7 +9,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 
 // Importações mudaram para nossos novos pacotes
-import iq.legit.config.ConfigManager; 
+import iq.legit.config.ConfigManager;
 import iq.legit.keybinds.ModKeybinds;
 
 public class ModMenuIntegration implements ModMenuApi {
@@ -46,6 +46,20 @@ public class ModMenuIntegration implements ModMenuApi {
                 .addEntry(entry.startBooleanToggle(Text.literal("Mana Drain Notify"), ConfigManager.manaDrainNotify)
                     .setDefaultValue(true)
                     .setSaveConsumer(val -> ConfigManager.manaDrainNotify = val)
+                    .build());
+            // --- Kuudra Features ---
+            builder.getOrCreateCategory(Text.literal("Kuudra Features"))
+                .addEntry(entry.startBooleanToggle(Text.literal("Fresh Message"), ConfigManager.freshMessage)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(val -> ConfigManager.freshMessage = val)
+                    .build())     
+                .addEntry(entry.startBooleanToggle(Text.literal("Kuudra Direction"), ConfigManager.kuudraDirection)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(val -> ConfigManager.kuudraDirection = val)
+                    .build())
+                .addEntry(entry.startBooleanToggle(Text.literal("Kuudra Hitbox"), ConfigManager.kuudraHitbox)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(val -> ConfigManager.kuudraHitbox = val)
                     .build());
 
             builder.getOrCreateCategory(Text.literal("Keybinds"))

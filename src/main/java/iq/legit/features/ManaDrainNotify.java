@@ -24,12 +24,12 @@ public class ManaDrainNotify {
             Matcher matcher = MANA_DRAIN_PATTERN.matcher(chatMessage);
             if (matcher.find()) {  
                 String mana = matcher.group(1);
-                int playersFound = 0;
+                int playersFound = -1;
 
                 for (PlayerEntity player : client.world.getPlayers()) {
                     if (client.player.distanceTo(player) <= 5) {
                         PlayerListEntry playerEntry = client.getNetworkHandler().getPlayerListEntry(player.getUuid());
-                        if (playerEntry != null && playerEntry.getLatency() != 1) {
+                        if (playerEntry != null && playerEntry.getLatency() == 1) {
                             playersFound++;
 
                         }

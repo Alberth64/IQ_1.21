@@ -12,7 +12,7 @@ public class ModKeybinds {
 
     public static void register() {
         OPEN_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "Config Menu", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_O, CATEGORY
+            "Config Menu", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_I, CATEGORY
         ));
         
     }
